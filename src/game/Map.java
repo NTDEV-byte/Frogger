@@ -1,19 +1,26 @@
+package game;
+
+import game.debris.Trunk;
+import game.vehicles.*;
+import game.entities.Entity;
+import game.entities.Frog;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.sql.Array;
 import java.util.*;
 import java.util.List;
 
 public class Map extends JPanel {
 
-        public static final char CAR_LEFT = 'a';
-        public static final char CAR_RIGHT = 'b';
-        public static final char CAR_RIGHT_2 = 'c';
-        public static final char TRUCK = 'd';
+        public static final char FROGGO = 'f';
+        public static final char AEROPOD = 'a';
+        public static final char BONESHAKER = 'b';
+        public static final char CARBONATOR = 'c';
+        public static final char RAMBO  = 'r';  // Truck
+        public static final char TRUNK  = 't';  // Trunk
 
         public static final int CELL_WIDTH = 16;
         public static final int CELL_HEIGHT = 16;
@@ -32,6 +39,7 @@ public class Map extends JPanel {
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
+                        ".........................t......................................................" +
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
@@ -49,70 +57,69 @@ public class Map extends JPanel {
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
+                        "....................................r..........................................." +
+                        "................................................................................" +
+                        "................................................................................" +
+                        "................................................................................" +
+                        "..................c......c....c.....c.............c.....c......................." +
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
+                        "............b........b.............b.........b..........a......................." +
                         "................................................................................" +
                         "................................................................................" +
-                        "...........................b...b....b..b........................................" +
-                        "................................................................................" +
-                        "................................................................................" +
-                        "................................................................................" +
-                        "................................................................................" +
-                        ".....................................................................d.........." +
-                        "...............................................a................................" +
-                        ".....................b....b...b...b............................................." +
-                        "....................................b.................b...b.....b..............." +
+                        ".....................a....a........a......a....a...a....b......................." +
                         "................................................................................" +
                         "................................................................................" +
                         "................................................................................" +
-                        "......................................x.........................................";
+                        "................................................................................" +
+                        "......................................f.........................................";
 
 
         public Map(){
             setPreferredSize(new Dimension(CELL_WIDTH * WORLD_WIDTH , CELL_HEIGHT * WORLD_HEIGHT));
             generateWorld();
-            background = loadIMG("res/background.png");
+            background = loadIMG("/res/background.png");
         }
-
-
 
     private void generateWorld(){
         for(int y=0;y<WORLD_HEIGHT;y++){
             for(int x=0;x<WORLD_WIDTH;x++){
                 char c = map.charAt(x + y * WORLD_WIDTH);
                 switch(c){
-                    case 'x':
+                    case 'f':
 
-                        entities.add(new Frog(x * CELL_WIDTH , y * CELL_HEIGHT , Color.BLUE));
-
-                        break;
-
-                    case CAR_LEFT:
-
-                        entities.add(new Car(x * CELL_WIDTH , y * CELL_HEIGHT));
+                        entities.add(new Frog(x * CELL_WIDTH , y * CELL_HEIGHT));
 
                         break;
 
-                    case CAR_RIGHT:
+                    case AEROPOD:
 
-                        entities.add(new Car(x * CELL_WIDTH , y * CELL_HEIGHT));
-
-
-                        break;
-
-                    case CAR_RIGHT_2:
-
-                        entities.add(new Car(x * CELL_WIDTH , y * CELL_HEIGHT));
+                        entities.add(new AeroPod(x * CELL_WIDTH , y * CELL_HEIGHT));
 
                         break;
 
-                    case TRUCK:
-                        entities.add(new Truck(x * CELL_WIDTH , y * CELL_HEIGHT));
+                    case BONESHAKER:
+
+                        entities.add(new BoneShaker(x * CELL_WIDTH , y * CELL_HEIGHT));
+
                         break;
 
+                    case CARBONATOR:
+
+                        entities.add(new Carbonator(x * CELL_WIDTH , y * CELL_HEIGHT));
+
+                        break;
+
+                    case RAMBO:
+                        entities.add(new Rambo(x * CELL_WIDTH , y * CELL_HEIGHT));
+                        break;
+
+                    case TRUNK:
+                        entities.add(new Trunk(x * CELL_WIDTH , y * CELL_HEIGHT));
+                        break;
 
                     default:
 
@@ -122,60 +129,19 @@ public class Map extends JPanel {
         }
     }
 
-
-
-    private void renderWorld(Graphics g){
-             for(int y=0;y<WORLD_HEIGHT;y++){
-                  for(int x=0;x<WORLD_WIDTH;x++){
-                      char c = map.charAt(x + y * WORLD_WIDTH);
-                      switch(c){
-                          case 'x':
-                              g.setColor(Color.red);
-                              break;
-
-                          case 'a':
-                              g.setColor(Color.CYAN);
-
-                              break;
-
-                          case 'b':
-                                g.setColor(Color.white);
-                              break;
-
-                          case 'c':
-                                g.setColor(Color.green);
-                              break;
-
-                          case 'd':
-                                g.setColor(Color.magenta);
-                              break;
-                          default:
-                              g.setColor(Color.yellow);
-                              break;
-                      }
-                      g.fillRect(x * CELL_WIDTH , y * CELL_HEIGHT , CELL_WIDTH , CELL_HEIGHT);
-                  }
-             }
-        }
-
-
         public void paint(Graphics g){
-        //    g.setColor(Color.black);
-          //  g.fillRect(0,0,getWidth() , getHeight());
             g.drawImage(background,0,0,getWidth(),getHeight(),null);
             for(Entity e : entities){
                 e.update();
                 e.render(g);
             }
             try {
-                Thread.sleep(30);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //renderWorld(g);
             repaint();
         }
-
 
         public static BufferedImage loadIMG(String path){
             try {

@@ -1,7 +1,12 @@
+package game.entities;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
+
+    public static final float DEFAULT_SPEED = 8.0f;
+
 
         protected Rectangle bounds;
         protected Color color;
@@ -12,6 +17,24 @@ public abstract class Entity {
                  bounds = new Rectangle(x,y,width,height);
                  this.color = color;
             }
+
+            public Entity(int x,int y,int width,int height,BufferedImage image){
+                bounds = new Rectangle(x,y,width,height);
+                this.image = image;
+            }
+
+            public Entity(Rectangle bounds, BufferedImage image){
+                this.bounds = bounds;
+                this.image = image;
+            }
+
+
+            protected void showLimits(Graphics g){
+                g.setColor(Color.red);
+                g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
+            }
+
+
 
             public abstract void update();
 
