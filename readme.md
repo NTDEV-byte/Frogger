@@ -33,7 +33,7 @@ Q or Left arrow to move left
 
 <li style="color:yellow;">
 
-Z or Right arrow to move right
+D or Right arrow to move right
 
 
 </li>
