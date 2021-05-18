@@ -21,5 +21,6 @@ public class Trunk extends Entity {
 
         public void render(Graphics g){
             g.drawImage(image , bounds.x,bounds.y,bounds.width,bounds.height , null);
+            //showLimits(g);
         }
 }

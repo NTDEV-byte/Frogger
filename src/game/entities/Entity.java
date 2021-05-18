@@ -28,13 +28,14 @@ public abstract class Entity {
                 this.image = image;
             }
 
-
             protected void showLimits(Graphics g){
                 g.setColor(Color.red);
                 g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
             }
 
-
+            public boolean collision(Entity e){
+                 return bounds.intersects(e.bounds);
+            }
 
             public abstract void update();
 
@@ -42,6 +43,5 @@ public abstract class Entity {
                 g.setColor(color);
                 g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
             }
-
 
 }

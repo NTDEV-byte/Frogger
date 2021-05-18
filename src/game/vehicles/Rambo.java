@@ -23,6 +23,6 @@ public class Rambo extends Vehicle {
 
 
     public void render(Graphics g){
-        g.drawImage(image , bounds.x , bounds.y , bounds.width , bounds.height , null);
+        g.drawImage(image , bounds.x , bounds.y , bounds.width , bounds.height  , null);
     }
 }
